@@ -220,6 +220,23 @@ button{
     border-radius:10px;
 }
 
+.carousel{
+
+    display:flex;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+}
+
+.carousel img{
+
+    min-width:100%;
+    height:250px;
+
+    object-fit:cover;
+
+    scroll-snap-align:center;
+}
+
 .favorite i{
 
     color:gray;

@@ -1,201 +1,281 @@
-const database =
-JSON.parse(localStorage.getItem("database"));
+async function iniciarReservas(){
 
-const contenedor =
-document.getElementById("cards");
+    if(!localStorage.getItem("database")){
 
-const buscador =
-document.getElementById("buscador");
+        const habitacionesResponse =
+        await fetch(
+            "./assets/data/habitaciones.json"
+        );
 
-renderCards(database.habitaciones);
+        const usuariosResponse =
+        await fetch(
+            "./assets/data/usuarios.json"
+        );
 
-buscador.addEventListener("input", () => {
+        const habitaciones =
+        await habitacionesResponse.json();
 
-    const valor =
-    buscador.value.toLowerCase();
+        const usuarios =
+        await usuariosResponse.json();
 
-    const filtrados =
-    database.habitaciones.filter(h =>
+        const database = {
 
-        h.nombre.toLowerCase().includes(valor)
-        ||
+            usuarios,
+            habitaciones
+        };
 
-        h.ciudad.toLowerCase().includes(valor)
-    );
+        localStorage.setItem(
+            "database",
+            JSON.stringify(database)
+        );
+    }
 
-    renderCards(filtrados);
+    const database =
+    JSON.parse(localStorage.getItem("database"));
 
-});
+    const contenedor =
+    document.getElementById("cards");
 
-function renderCards(lista){
+    const buscador =
+    document.getElementById("buscador");
 
-    const usuario =
-    JSON.parse(localStorage.getItem("usuarioActivo"));
+    renderCards(database.habitaciones);
 
-    contenedor.innerHTML = "";
+    buscador.addEventListener("input", () => {
 
-    lista.forEach(h => {
+        const valor =
+        buscador.value.toLowerCase();
 
-        const favorito =
-        usuario?.favoritos?.includes(h.id);
+        const filtrados =
+        database.habitaciones.filter(h =>
 
-        contenedor.innerHTML += `
+            h.nombre.toLowerCase().includes(valor)
+            ||
 
-        <div class="card">
+            h.ciudad.toLowerCase().includes(valor)
 
-            <img src="${h.imagen}">
+        );
 
-            <div
+        renderCards(filtrados);
+
+    });
+
+    function renderCards(lista){
+
+        const usuario =
+        JSON.parse(
+            localStorage.getItem("usuarioActivo")
+        );
+
+        contenedor.innerHTML = "";
+
+        lista.forEach(h => {
+
+            const favorito =
+            usuario?.favoritos?.includes(h.id);
+
+            const imagenes =
+            h.imagenes && h.imagenes.length > 0
+            ? h.imagenes
+            : [
+                "https://picsum.photos/400/300"
+              ];
+
+            const servicios =
+            h.servicios
+            ? h.servicios.join(" • ")
+            : "WiFi • TV";
+
+            contenedor.innerHTML += `
+
+            <div class="card">
+
+                <div class="carousel">
+
+                    ${imagenes.map(img => `
+
+                        <img
+                        src="${img}"
+                        class="carousel-img"
+                        >
+
+                    `).join("")}
+
+                </div>
+
+                <div
                 class="favorite"
                 onclick="toggleFavorito(${h.id})"
                 >
-                <i
-                class="
-                fa-solid fa-heart
-                ${favorito ? 'active' : ''}
-                "
-                ></i>
-            </div>
 
-            <div class="card-content">
+                    <i
+                    class="
+                    fa-solid fa-heart
+                    ${favorito ? 'active' : ''}
+                    "
+                    ></i>
 
-                <h3>${h.nombre}</h3>
+                </div>
 
-                <p>${h.ciudad}</p>
+                <div class="card-content">
 
-                <p>
-                    ${h.personas} personas
-                </p>
+                    <h3>${h.nombre}</h3>
 
-                <p class="price">
-                    $${h.precio}
-                </p>
+                    <p>${h.ciudad}</p>
 
-                <p>
+                    <p>
+                        👥 ${h.personas || 2} personas
+                    </p>
+
+                    <p>
+                        🛏️ ${h.camas || 1} camas
+                    </p>
+
+                    <p>
+                        📅 ${h.fechas || "Disponible este mes"}
+                    </p>
+
+                    <p>
+                        ${servicios}
+                    </p>
+
+                    <p class="price">
+                        $${h.precio}
+                    </p>
+
+                    <p>
+                        ${
+                            h.reservada
+                            ? "Reservada"
+                            : "Disponible"
+                        }
+                    </p>
+
                     ${
-                        h.reservada
-                        ? "Reservada"
-                        : "Disponible"
-                    }
-                </p>
-
-                ${
-                    !h.reservada
-                    ? `
-                    <button
+                        !h.reservada
+                        ? `
+                        <button
                         class="reservar"
                         onclick="reservar(${h.id})"
-                    >
-                        Reservar
-                    </button>
-                    `
-                    : ""
-                }
+                        >
+                            Reservar
+                        </button>
+                        `
+                        : ""
+                    }
 
-                ${
-                    usuario?.reserva === h.nombre
-                    ? `
-                    <button
+                    ${
+                        usuario?.reserva === h.nombre
+                        ? `
+                        <button
                         class="cancelar"
                         onclick="cancelarReserva(${h.id})"
-                    >
-                        Cancelar Reserva
-                    </button>
-                    `
-                    : ""
-                }
+                        >
+                            Cancelar Reserva
+                        </button>
+                        `
+                        : ""
+                    }
+
+                </div>
 
             </div>
 
-        </div>
+            `;
+        });
 
-        `;
-    });
-
-}
-
-function reservar(id){
-
-    const usuario =
-    JSON.parse(localStorage.getItem("usuarioActivo"));
-
-    if(!usuario){
-
-        alert("Debes iniciar sesión");
-        return;
     }
 
-    const usuarioDB =
-    database.usuarios.find(
-        u => u.email === usuario.email
-    );
+    window.reservar = function(id){
 
-    if(usuarioDB.reserva){
-
-        alert(
-            "Solo puedes tener una reserva"
+        const usuario =
+        JSON.parse(
+            localStorage.getItem("usuarioActivo")
         );
 
-        return;
+        if(!usuario){
+
+            alert("Debes iniciar sesión");
+            return;
+        }
+
+        const usuarioDB =
+        database.usuarios.find(
+            u => u.email === usuario.email
+        );
+
+        if(usuarioDB.reserva){
+
+            alert(
+                "Solo puedes tener una reserva"
+            );
+
+            return;
+        }
+
+        const habitacion =
+        database.habitaciones.find(
+            h => h.id === id
+        );
+
+        if(habitacion.reservada){
+
+            alert("Habitación reservada");
+            return;
+        }
+
+        habitacion.reservada = true;
+
+        usuarioDB.reserva =
+        habitacion.nombre;
+
+        localStorage.setItem(
+            "database",
+            JSON.stringify(database)
+        );
+
+        localStorage.setItem(
+            "usuarioActivo",
+            JSON.stringify(usuarioDB)
+        );
+
+        location.reload();
     }
 
-    const habitacion =
-    database.habitaciones.find(
-        h => h.id === id
-    );
+    window.cancelarReserva = function(id){
 
-    if(habitacion.reservada){
+        const usuario =
+        JSON.parse(
+            localStorage.getItem("usuarioActivo")
+        );
 
-        alert("Ya reservada");
-        return;
+        const usuarioDB =
+        database.usuarios.find(
+            u => u.email === usuario.email
+        );
+
+        const habitacion =
+        database.habitaciones.find(
+            h => h.id === id
+        );
+
+        habitacion.reservada = false;
+
+        usuarioDB.reserva = null;
+
+        localStorage.setItem(
+            "database",
+            JSON.stringify(database)
+        );
+
+        localStorage.setItem(
+            "usuarioActivo",
+            JSON.stringify(usuarioDB)
+        );
+
+        location.reload();
     }
 
-    habitacion.reservada = true;
-
-    usuarioDB.reserva =
-    habitacion.nombre;
-
-    localStorage.setItem(
-        "database",
-        JSON.stringify(database)
-    );
-
-    localStorage.setItem(
-        "usuarioActivo",
-        JSON.stringify(usuarioDB)
-    );
-
-    location.reload();
 }
 
-function cancelarReserva(id){
-
-    const usuario =
-    JSON.parse(localStorage.getItem("usuarioActivo"));
-
-    const usuarioDB =
-    database.usuarios.find(
-        u => u.email === usuario.email
-    );
-
-    const habitacion =
-    database.habitaciones.find(
-        h => h.id === id
-    );
-
-    habitacion.reservada = false;
-
-    usuarioDB.reserva = null;
-
-    localStorage.setItem(
-        "database",
-        JSON.stringify(database)
-    );
-
-    localStorage.setItem(
-        "usuarioActivo",
-        JSON.stringify(usuarioDB)
-    );
-
-    location.reload();
-}
+iniciarReservas();

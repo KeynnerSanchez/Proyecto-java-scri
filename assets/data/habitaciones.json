@@ -1,110 +1,64 @@
 [
 {
     "id": 1,
-    "nombre": "Apartamento en Chapinero",
-    "precio": 180000,
-    "personas": 4,
+    "nombre": "Suite Premium",
+    "precio": 350000,
+    "personas": 2,
+    "camas": 1,
     "ciudad": "Bogotá",
-    "imagen": "https://picsum.photos/400/300?1",
+    "servicios": [
+    "WiFi",
+    "Jacuzzi",
+    "Minibar",
+    "TV"
+    ],
+    "fechas": "10 Mayo - 20 Mayo",
+    "imagenes": [
+    "https://picsum.photos/400/300?1",
+    "https://picsum.photos/400/300?2",
+    "https://picsum.photos/400/300?3"
+    ],
     "reservada": false
 },
 {
     "id": 2,
-    "nombre": "Suite Premium",
-    "precio": 350000,
-    "personas": 2,
-    "ciudad": "Bogotá",
-    "imagen": "https://picsum.photos/400/300?2",
+    "nombre": "Apartamento Familiar",
+    "precio": 480000,
+    "personas": 5,
+    "camas": 3,
+    "ciudad": "Medellín",
+    "servicios": [
+    "WiFi",
+    "Piscina",
+    "Cocina",
+    "Netflix"
+    ],
+    "fechas": "15 Mayo - 28 Mayo",
+    "imagenes": [
+    "https://picsum.photos/400/300?4",
+    "https://picsum.photos/400/300?5",
+    "https://picsum.photos/400/300?6"
+    ],
     "reservada": false
 },
 {
     "id": 3,
-    "nombre": "Casa Campestre",
-    "precio": 500000,
-    "personas": 8,
-    "ciudad": "Bucaramanga",
-    "imagen": "https://picsum.photos/400/300?3",
-    "reservada": false
-},
-{
-    "id": 4,
-    "nombre": "Apartamento Moderno",
-    "precio": 210000,
-    "personas": 3,
-    "ciudad": "Medellín",
-    "imagen": "https://picsum.photos/400/300?4",
-    "reservada": false
-},
-{
-    "id": 5,
     "nombre": "Loft Ejecutivo",
-    "precio": 260000,
+    "precio": 220000,
     "personas": 2,
+    "camas": 1,
     "ciudad": "Cali",
-    "imagen": "https://picsum.photos/400/300?5",
-    "reservada": false
-},
-{
-    "id": 6,
-    "nombre": "Habitación Familiar",
-    "precio": 290000,
-    "personas": 5,
-    "ciudad": "Cartagena",
-    "imagen": "https://picsum.photos/400/300?6",
-    "reservada": false
-},
-{
-    "id": 7,
-    "nombre": "Suite Vista Mar",
-    "precio": 650000,
-    "personas": 2,
-    "ciudad": "Santa Marta",
-    "imagen": "https://picsum.photos/400/300?7",
-    "reservada": false
-},
-{
-    "id": 8,
-    "nombre": "Apartamento Central",
-    "precio": 190000,
-    "personas": 3,
-    "ciudad": "Bogotá",
-    "imagen": "https://picsum.photos/400/300?8",
-    "reservada": false
-},
-{
-    "id": 9,
-    "nombre": "Casa Colonial",
-    "precio": 420000,
-    "personas": 6,
-    "ciudad": "Villa de Leyva",
-    "imagen": "https://picsum.photos/400/300?9",
-    "reservada": false
-},
-{
-    "id": 10,
-    "nombre": "Loft Minimalista",
-    "precio": 170000,
-    "personas": 2,
-    "ciudad": "Pereira",
-    "imagen": "https://picsum.photos/400/300?10",
-    "reservada": false
-},
-{
-    "id": 11,
-    "nombre": "Penthouse Luxury",
-    "precio": 900000,
-    "personas": 6,
-    "ciudad": "Bogotá",
-    "imagen": "https://picsum.photos/400/300?11",
-    "reservada": false
-},
-{
-    "id": 12,
-    "nombre": "Cabaña Natural",
-    "precio": 300000,
-    "personas": 4,
-    "ciudad": "San Gil",
-    "imagen": "https://picsum.photos/400/300?12",
+    "servicios": [
+    "WiFi",
+    "Aire acondicionado",
+    "TV"
+    ],
+    "fechas": "5 Mayo - 25 Mayo",
+    "imagenes": [
+    "https://picsum.photos/400/300?7",
+    "https://picsum.photos/400/300?8",
+    "https://picsum.photos/400/300?9"
+    ],
     "reservada": false
 }
 ]

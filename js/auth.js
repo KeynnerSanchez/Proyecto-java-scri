@@ -13,6 +13,15 @@ if(registerForm){
         const nombre =
         document.getElementById("nombre").value;
 
+        const identificacion =
+        document.getElementById("identificacion").value;
+
+        const nacionalidad =
+        document.getElementById("nacionalidad").value;
+
+        const telefono =
+        document.getElementById("telefono").value;
+
         const email =
         document.getElementById("email").value;
 
@@ -33,6 +42,9 @@ if(registerForm){
         const nuevoUsuario = {
 
             nombre,
+            identificacion,
+            nacionalidad,
+            telefono,
             email,
             password,
 

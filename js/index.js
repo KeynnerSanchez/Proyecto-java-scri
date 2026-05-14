@@ -1,59 +1,104 @@
-const database =
-JSON.parse(localStorage.getItem("database"));
+async function iniciarInicio(){
 
-const contenedor =
-document.getElementById("cards");
+    if(!localStorage.getItem("database")){
 
-const recomendados =
-database.habitaciones.slice(0,5);
+        const habitacionesResponse =
+        await fetch(
+            "./assets/data/habitaciones.json"
+        );
 
-renderCards(recomendados);
+        const usuariosResponse =
+        await fetch(
+            "./assets/data/usuarios.json"
+        );
 
-function renderCards(lista){
+        const habitaciones =
+        await habitacionesResponse.json();
 
-    const usuario =
-    JSON.parse(localStorage.getItem("usuarioActivo"));
+        const usuarios =
+        await usuariosResponse.json();
 
-    contenedor.innerHTML = "";
+        const database = {
 
-    lista.forEach(h => {
+            usuarios,
+            habitaciones
+        };
 
-        const favorito =
-        usuario?.favoritos?.includes(h.id);
+        localStorage.setItem(
+            "database",
+            JSON.stringify(database)
+        );
+    }
 
-        contenedor.innerHTML += `
+    const database =
+    JSON.parse(localStorage.getItem("database"));
 
-        <div class="card">
+    const contenedor =
+    document.getElementById("cards");
 
-            <img src="${h.imagen}">
+    const recomendados =
+    database.habitaciones.slice(0,5);
 
-            <div
+    renderCards(recomendados);
+
+    function renderCards(lista){
+
+        const usuario =
+        JSON.parse(
+            localStorage.getItem("usuarioActivo")
+        );
+
+        contenedor.innerHTML = "";
+
+        lista.forEach(h => {
+
+            const favorito =
+            usuario?.favoritos?.includes(h.id);
+
+            const imagen =
+            h.imagenes && h.imagenes.length > 0
+            ? h.imagenes[0]
+            : "https://picsum.photos/400/300";
+
+            contenedor.innerHTML += `
+
+            <div class="card">
+
+                <img src="${imagen}">
+
+                <div
                 class="favorite"
                 onclick="toggleFavorito(${h.id})"
-            >
-                <i
-                class="
-                fa-solid fa-heart
-                ${favorito ? 'active' : ''}
-                "
-                ></i>
+                >
+
+                    <i
+                    class="
+                    fa-solid fa-heart
+                    ${favorito ? 'active' : ''}
+                    "
+                    ></i>
+
+                </div>
+
+                <div class="card-content">
+
+                    <h3>${h.nombre}</h3>
+
+                    <p>${h.ciudad}</p>
+
+                    <p class="price">
+                        $${h.precio}
+                    </p>
+
+                </div>
+
             </div>
 
-            <div class="card-content">
+            `;
+        });
 
-                <h3>${h.nombre}</h3>
-
-                <p>${h.ciudad}</p>
-
-                <p class="price">
-                    $${h.precio}
-                </p>
-
-            </div>
-
-        </div>
-
-        `;
-    });
+    }
 
 }
+
+iniciarInicio();
