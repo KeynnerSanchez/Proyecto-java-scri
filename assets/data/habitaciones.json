@@ -14,9 +14,9 @@
     ],
     "fechas": "10 Mayo - 20 Mayo",
     "imagenes": [
-    "https://picsum.photos/400/300?1",
-    "https://picsum.photos/400/300?2",
-    "https://picsum.photos/400/300?3"
+    "Suite-Premiun(1).jpg",
+    "Suite-Premiun(2).png",
+    "Suite-Premiun(3).jpg"
     ],
     "reservada": false
 },
@@ -35,13 +35,13 @@
     ],
     "fechas": "15 Mayo - 28 Mayo",
     "imagenes": [
-    "https://picsum.photos/400/300?4",
-    "https://picsum.photos/400/300?5",
-    "https://picsum.photos/400/300?6"
+    "Apartamento-Familiar(1).jpg,",
+    "Apartamento-Familiar(2).jpg,",
+    "Apartamento-Familiar(3).jpg,"
     ],
     "reservada": false
-},
-{
+}, 
+{  
     "id": 3,
     "nombre": "Loft Ejecutivo",
     "precio": 220000,
@@ -55,9 +55,9 @@
     ],
     "fechas": "5 Mayo - 25 Mayo",
     "imagenes": [
-    "https://picsum.photos/400/300?7",
-    "https://picsum.photos/400/300?8",
-    "https://picsum.photos/400/300?9"
+    "Loft-Ejecutivo(1).jpg",
+    "Loft-Ejecutivo(2).jpg",
+    "Loft-Ejecutivo(3).jpg"
     ],
     "reservada": false
 }
