@@ -14,12 +14,13 @@
     ],
     "fechas": "10 Mayo - 20 Mayo",
     "imagenes": [
-    "Suite-Premiun(1).jpg",
-    "Suite-Premiun(2).png",
-    "Suite-Premiun(3).jpg"
+    "assets/img/Homero.jpg",
+    "assets/img/Suite-Premiun-2.jpg",
+    "assets/img/Suite-Premium-3.jpg"
     ],
     "reservada": false
 },
+
 {
     "id": 2,
     "nombre": "Apartamento Familiar",
@@ -35,13 +36,14 @@
     ],
     "fechas": "15 Mayo - 28 Mayo",
     "imagenes": [
-    "Apartamento-Familiar(1).jpg,",
-    "Apartamento-Familiar(2).jpg,",
-    "Apartamento-Familiar(3).jpg,"
+    "assets/img/Apartamento-Familiar-1.jpg",
+    "assets/img/Apartamento-Familiar-2.jpg",
+    "assets/img/Apartamento-Familiar-3.jpg"
     ],
     "reservada": false
-}, 
-{  
+},
+
+{
     "id": 3,
     "nombre": "Loft Ejecutivo",
     "precio": 220000,
@@ -55,9 +57,9 @@
     ],
     "fechas": "5 Mayo - 25 Mayo",
     "imagenes": [
-    "Loft-Ejecutivo(1).jpg",
-    "Loft-Ejecutivo(2).jpg",
-    "Loft-Ejecutivo(3).jpg"
+    "assets/img/Loft-Ejecutivo-1.jpg",
+    "assets/img/Loft-Ejecutivo-2.jpg",
+    "assets/img/Loft-Ejecutivo-3.jpg"
     ],
     "reservada": false
 }

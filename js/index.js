@@ -1,37 +1,31 @@
 async function iniciarInicio(){
 
-    if(!localStorage.getItem("database")){
+    const habitacionesResponse =
+    await fetch(
+        "./assets/data/habitaciones.json"
+    );
 
-        const habitacionesResponse =
-        await fetch(
-            "./assets/data/habitaciones.json"
-        );
+    const usuariosResponse =
+    await fetch(
+        "./assets/data/usuarios.json"
+    );
 
-        const usuariosResponse =
-        await fetch(
-            "./assets/data/usuarios.json"
-        );
+    const habitaciones =
+    await habitacionesResponse.json();
 
-        const habitaciones =
-        await habitacionesResponse.json();
+    const usuarios =
+    await usuariosResponse.json();
 
-        const usuarios =
-        await usuariosResponse.json();
+    const database = {
 
-        const database = {
+        usuarios,
+        habitaciones
+    };
 
-            usuarios,
-            habitaciones
-        };
-
-        localStorage.setItem(
-            "database",
-            JSON.stringify(database)
-        );
-    }
-
-    const database =
-    JSON.parse(localStorage.getItem("database"));
+    localStorage.setItem(
+        "database",
+        JSON.stringify(database)
+    );
 
     const contenedor =
     document.getElementById("cards");
@@ -58,13 +52,17 @@ async function iniciarInicio(){
             const imagen =
             h.imagenes && h.imagenes.length > 0
             ? h.imagenes[0]
-            : "https://picsum.photos/400/300";
+            : "";
 
             contenedor.innerHTML += `
 
             <div class="card">
 
-                <img src="${imagen}">
+                <img
+                src="${imagen}"
+                alt="${h.nombre}"
+                class="card-image"
+                >
 
                 <div
                 class="favorite"
