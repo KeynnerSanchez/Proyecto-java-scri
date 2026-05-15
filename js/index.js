@@ -7,7 +7,7 @@ function iniciarInicio(){
     document.getElementById("cards");
 
     const recomendados =
-    database.habitaciones.slice(0,5);
+    database.habitaciones.slice(0,4);
 
     renderCards(recomendados);
 
