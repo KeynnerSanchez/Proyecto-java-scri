@@ -1,31 +1,7 @@
-async function iniciarReservas(){
+function iniciarReservas(){
 
-    const habitacionesResponse =
-    await fetch(
-        "./assets/data/habitaciones.json"
-    );
-
-    const usuariosResponse =
-    await fetch(
-        "./assets/data/usuarios.json"
-    );
-
-    const habitaciones =
-    await habitacionesResponse.json();
-
-    const usuarios =
-    await usuariosResponse.json();
-
-    const database = {
-
-        usuarios,
-        habitaciones
-    };
-
-    localStorage.setItem(
-        "database",
-        JSON.stringify(database)
-    );
+    const database =
+    JSON.parse(localStorage.getItem("database"));
 
     const contenedor =
     document.getElementById("cards");
@@ -68,15 +44,8 @@ async function iniciarReservas(){
             const favorito =
             usuario?.favoritos?.includes(h.id);
 
-            const imagenes =
-            h.imagenes && h.imagenes.length > 0
-            ? h.imagenes
-            : [];
-
             const servicios =
-            h.servicios
-            ? h.servicios.join(" • ")
-            : "WiFi • TV";
+            h.servicios.join(" • ");
 
             contenedor.innerHTML += `
 
@@ -84,12 +53,11 @@ async function iniciarReservas(){
 
                 <div class="carousel">
 
-                    ${imagenes.map(img => `
+                    ${h.imagenes.map(img => `
 
                         <img
                         src="${img}"
                         class="carousel-img"
-                        alt="${h.nombre}"
                         >
 
                     `).join("")}
@@ -117,15 +85,15 @@ async function iniciarReservas(){
                     <p>${h.ciudad}</p>
 
                     <p>
-                        👥 ${h.personas || 2} personas
+                        👥 ${h.personas} personas
                     </p>
 
                     <p>
-                        🛏️ ${h.camas || 1} camas
+                        🛏️ ${h.camas} camas
                     </p>
 
                     <p>
-                        📅 ${h.fechas || "Disponible este mes"}
+                        📅 ${h.fechas}
                     </p>
 
                     <p>
@@ -179,96 +147,102 @@ async function iniciarReservas(){
 
     }
 
-    window.reservar = function(id){
+}
 
-        const usuario =
-        JSON.parse(
-            localStorage.getItem("usuarioActivo")
-        );
+function reservar(id){
 
-        if(!usuario){
+    const usuario =
+    JSON.parse(
+        localStorage.getItem("usuarioActivo")
+    );
 
-            alert("Debes iniciar sesión");
-            return;
-        }
+    if(!usuario){
 
-        const usuarioDB =
-        database.usuarios.find(
-            u => u.email === usuario.email
-        );
-
-        if(usuarioDB.reserva){
-
-            alert(
-                "Solo puedes tener una reserva"
-            );
-
-            return;
-        }
-
-        const habitacion =
-        database.habitaciones.find(
-            h => h.id === id
-        );
-
-        if(habitacion.reservada){
-
-            alert("Habitación reservada");
-            return;
-        }
-
-        habitacion.reservada = true;
-
-        usuarioDB.reserva =
-        habitacion.nombre;
-
-        localStorage.setItem(
-            "database",
-            JSON.stringify(database)
-        );
-
-        localStorage.setItem(
-            "usuarioActivo",
-            JSON.stringify(usuarioDB)
-        );
-
-        location.reload();
+        alert("Debes iniciar sesión");
+        return;
     }
 
-    window.cancelarReserva = function(id){
+    const database =
+    JSON.parse(localStorage.getItem("database"));
 
-        const usuario =
-        JSON.parse(
-            localStorage.getItem("usuarioActivo")
+    const usuarioDB =
+    database.usuarios.find(
+        u => u.email === usuario.email
+    );
+
+    if(usuarioDB.reserva){
+
+        alert(
+            "Solo puedes tener una reserva"
         );
 
-        const usuarioDB =
-        database.usuarios.find(
-            u => u.email === usuario.email
-        );
-
-        const habitacion =
-        database.habitaciones.find(
-            h => h.id === id
-        );
-
-        habitacion.reservada = false;
-
-        usuarioDB.reserva = null;
-
-        localStorage.setItem(
-            "database",
-            JSON.stringify(database)
-        );
-
-        localStorage.setItem(
-            "usuarioActivo",
-            JSON.stringify(usuarioDB)
-        );
-
-        location.reload();
+        return;
     }
 
+    const habitacion =
+    database.habitaciones.find(
+        h => h.id === id
+    );
+
+    if(habitacion.reservada){
+
+        alert("Habitación reservada");
+        return;
+    }
+
+    habitacion.reservada = true;
+
+    usuarioDB.reserva =
+    habitacion.nombre;
+
+    localStorage.setItem(
+        "database",
+        JSON.stringify(database)
+    );
+
+    localStorage.setItem(
+        "usuarioActivo",
+        JSON.stringify(usuarioDB)
+    );
+
+    location.reload();
+}
+
+function cancelarReserva(id){
+
+    const usuario =
+    JSON.parse(
+        localStorage.getItem("usuarioActivo")
+    );
+
+    const database =
+    JSON.parse(localStorage.getItem("database"));
+
+    const usuarioDB =
+    database.usuarios.find(
+        u => u.email === usuario.email
+    );
+
+    const habitacion =
+    database.habitaciones.find(
+        h => h.id === id
+    );
+
+    habitacion.reservada = false;
+
+    usuarioDB.reserva = null;
+
+    localStorage.setItem(
+        "database",
+        JSON.stringify(database)
+    );
+
+    localStorage.setItem(
+        "usuarioActivo",
+        JSON.stringify(usuarioDB)
+    );
+
+    location.reload();
 }
 
 iniciarReservas();

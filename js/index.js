@@ -1,31 +1,7 @@
-async function iniciarInicio(){
+function iniciarInicio(){
 
-    const habitacionesResponse =
-    await fetch(
-        "./assets/data/habitaciones.json"
-    );
-
-    const usuariosResponse =
-    await fetch(
-        "./assets/data/usuarios.json"
-    );
-
-    const habitaciones =
-    await habitacionesResponse.json();
-
-    const usuarios =
-    await usuariosResponse.json();
-
-    const database = {
-
-        usuarios,
-        habitaciones
-    };
-
-    localStorage.setItem(
-        "database",
-        JSON.stringify(database)
-    );
+    const database =
+    JSON.parse(localStorage.getItem("database"));
 
     const contenedor =
     document.getElementById("cards");
@@ -50,9 +26,7 @@ async function iniciarInicio(){
             usuario?.favoritos?.includes(h.id);
 
             const imagen =
-            h.imagenes && h.imagenes.length > 0
-            ? h.imagenes[0]
-            : "";
+            h.imagenes[0];
 
             contenedor.innerHTML += `
 
@@ -60,7 +34,6 @@ async function iniciarInicio(){
 
                 <img
                 src="${imagen}"
-                alt="${h.nombre}"
                 class="card-image"
                 >
 
