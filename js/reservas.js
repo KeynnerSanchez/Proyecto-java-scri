@@ -10,6 +10,7 @@ function iniciarReservas(){
     document.getElementById("buscador");
 
     renderCards(database.habitaciones);
+    
 
     buscador.addEventListener("input", () => {
 
