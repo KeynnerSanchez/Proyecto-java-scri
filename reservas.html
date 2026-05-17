@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Reservas</title>
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link
+    rel="stylesheet"
+    href="css/style.css"
+    >
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
 </head>
+
 <body>
 
-    <nav>
+<header>
+
+    <nav class="navbar">
 
         <div class="logo">
-            El Rincón del Carmen 
+            El Rincón del Carmen
         </div>
 
-        <div class="nav-links">
+        <div class="nav-center">
 
             <a href="index.html">
                 Inicio
@@ -26,39 +44,51 @@
                 Reservas
             </a>
 
+            <a href="contacto.html">
+                Contacto
+            </a>
+
         </div>
 
-        <div id="userContainer"></div>
+        <div class="nav-right">
+
+            <a href="login.html">
+                Login
+            </a>
+
+            <a href="register.html">
+                Registro
+            </a>
+
+        </div>
 
     </nav>
 
-    <div class="search-bar">
+</header>
 
-        <input
-            type="text"
-            id="buscador"
-            placeholder="Buscar ciudad o lugar..."
-        >
+<section class="search-container">
 
-    </div>
+    <input
+    type="text"
+    id="buscador"
+    placeholder="Buscar ciudad o lugar..."
+    >
 
-    <section class="section">
+</section>
 
-        <h2>
-            Catálogo completo
-        </h2>
+<h2 class="section-title">
+    Catálogo completo
+</h2>
 
-        <div
-            class="cards"
-            id="cards"
-        ></div>
+<section
+class="cards"
+id="cards"
+>
 
-    </section>
+</section>
 
-    <script src="js/database.js"></script>
-    <script src="js/navbar.js"></script>
-    <script src="js/favoritos.js"></script>
-    <script src="js/reservas.js"></script>
+<script src="js/favoritos.js"></script>
+<script src="js/reservas.js"></script>
 
 </body>
 </html>

@@ -1,69 +1,102 @@
 function iniciarInicio(){
 
     const database =
-    JSON.parse(localStorage.getItem("database"));
+    JSON.parse(
+        localStorage.getItem("database")
+    );
 
     const contenedor =
     document.getElementById("cards");
 
     const recomendados =
-    database.habitaciones.slice(0,5);
+    [...database.habitaciones]
+    .sort(() => Math.random() - 0.5)
+    .slice(0,8);
 
     renderCards(recomendados);
 
     function renderCards(lista){
 
-        const usuario =
-        JSON.parse(
-            localStorage.getItem("usuarioActivo")
-        );
-
         contenedor.innerHTML = "";
 
         lista.forEach(h => {
 
-            const favorito =
-            usuario?.favoritos?.includes(h.id);
-
-            const imagen =
-            h.imagenes[0];
-
             contenedor.innerHTML += `
 
-            <div class="card">
+            <a
+            href="
+            reservas.html?id=${h.id}
+            "
+            class="card-link"
+            >
 
-                <img
-                src="${imagen}"
-                class="card-image"
-                >
+                <div class="card">
 
-                <div
-                class="favorite"
-                onclick="toggleFavorito(${h.id})"
-                >
+                    <div class="carousel">
 
-                    <i
-                    class="
-                    fa-solid fa-heart
-                    ${favorito ? 'active' : ''}
+                        ${h.imagenes.map(img => `
+
+                            <img
+                            src="${img}"
+                            >
+
+                        `).join("")}
+
+                    </div>
+
+                    <div
+                    class="favorite"
+                    onclick="
+                    event.preventDefault();
+                    toggleFavorito(${h.id})
                     "
-                    ></i>
+                    >
+
+                        <i
+                        class="
+                        fa-solid fa-heart
+                        "
+                        ></i>
+
+                    </div>
+
+                    <div class="card-content">
+
+                        <h3>
+                            ${h.nombre}
+                        </h3>
+
+                        <p>
+                            📍 ${h.ciudad}
+                        </p>
+
+                        <p>
+                            👥 ${h.personas} personas
+                        </p>
+
+                        <p>
+                            🛏️ ${h.camas} camas
+                        </p>
+
+                        <p>
+                            📅 ${h.fechas}
+                        </p>
+
+                        <p>
+                            ${h.servicios.join(" • ")}
+                        </p>
+
+                        <p class="price">
+
+                            $${h.precio}
+
+                        </p>
+
+                    </div>
 
                 </div>
 
-                <div class="card-content">
-
-                    <h3>${h.nombre}</h3>
-
-                    <p>${h.ciudad}</p>
-
-                    <p class="price">
-                        $${h.precio}
-                    </p>
-
-                </div>
-
-            </div>
+            </a>
 
             `;
         });
