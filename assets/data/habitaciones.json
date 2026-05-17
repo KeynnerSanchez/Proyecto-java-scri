@@ -62,5 +62,27 @@
     "assets/img/Loft-Ejecutivo-3.jpg"
     ],
     "reservada": false
+},
+
+{
+    "id": 4,
+    "nombre": "Cabaña Privada",
+    "precio": 870000,
+    "personas": 2,
+    "camas": 2,
+    "ciudad": "Guatapé",
+    "servicios": [
+    "WiFi",
+    "Piscina",
+    "Cocina",
+    "Hermosas vistas"
+    ],
+    "fechas": "7  Junio - 18 Junio",
+    "imagenes": [
+    "assets/img/Cabaña-Privada-1.jpg",
+    "assets/img/Cabaña-Privada-2.jpg",
+    "assets/img/Cabaña-Privada-3.jpg"
+    ],
+    "reservada": false
 }
 ]
