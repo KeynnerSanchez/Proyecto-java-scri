@@ -1,8 +1,30 @@
-function iniciarInicio(){
+async function iniciarInicio(){
 
-    const database =
-    JSON.parse(
-        localStorage.getItem("database")
+    const habitacionesResponse =
+    await fetch(
+        "./assets/data/habitaciones.json"
+    );
+
+    const usuariosResponse =
+    await fetch(
+        "./assets/data/usuarios.json"
+    );
+
+    const habitaciones =
+    await habitacionesResponse.json();
+
+    const usuarios =
+    await usuariosResponse.json();
+
+    const database = {
+
+        usuarios,
+        habitaciones
+    };
+
+    localStorage.setItem(
+        "database",
+        JSON.stringify(database)
     );
 
     const contenedor =
@@ -17,16 +39,27 @@ function iniciarInicio(){
 
     function renderCards(lista){
 
+        const usuario =
+        JSON.parse(
+            localStorage.getItem("usuarioActivo")
+        );
+
         contenedor.innerHTML = "";
 
         lista.forEach(h => {
 
+            const favorito =
+            usuario?.favoritos?.includes(h.id);
+
+            const imagenes =
+            h.imagenes && h.imagenes.length > 0
+            ? h.imagenes
+            : [];
+
             contenedor.innerHTML += `
 
             <a
-            href="
-            reservas.html?id=${h.id}
-            "
+            href="reservas.html?id=${h.id}"
             class="card-link"
             >
 
@@ -34,10 +67,11 @@ function iniciarInicio(){
 
                     <div class="carousel">
 
-                        ${h.imagenes.map(img => `
+                        ${imagenes.map(img => `
 
                             <img
                             src="${img}"
+                            class="carousel-img"
                             >
 
                         `).join("")}
@@ -46,15 +80,13 @@ function iniciarInicio(){
 
                     <div
                     class="favorite"
-                    onclick="
-                    event.preventDefault();
-                    toggleFavorito(${h.id})
-                    "
+                    onclick="event.preventDefault(); toggleFavorito(${h.id})"
                     >
 
                         <i
                         class="
                         fa-solid fa-heart
+                        ${favorito ? 'active' : ''}
                         "
                         ></i>
 
@@ -62,13 +94,9 @@ function iniciarInicio(){
 
                     <div class="card-content">
 
-                        <h3>
-                            ${h.nombre}
-                        </h3>
+                        <h3>${h.nombre}</h3>
 
-                        <p>
-                            📍 ${h.ciudad}
-                        </p>
+                        <p>📍 ${h.ciudad}</p>
 
                         <p>
                             👥 ${h.personas} personas
@@ -87,9 +115,7 @@ function iniciarInicio(){
                         </p>
 
                         <p class="price">
-
                             $${h.precio}
-
                         </p>
 
                     </div>

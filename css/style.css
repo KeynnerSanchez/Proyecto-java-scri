@@ -397,3 +397,12 @@ button:hover{
     font-size: 22px;
 }
 }
+.card-link{
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card-link:hover{
+    transform: scale(1.01);
+}
