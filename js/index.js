@@ -1,31 +1,9 @@
 async function iniciarInicio(){
 
-    const habitacionesResponse =
-    await fetch(
-        "./assets/data/habitaciones.json"
-    );
+    await cargarDatabase();
 
-    const usuariosResponse =
-    await fetch(
-        "./assets/data/usuarios.json"
-    );
-
-    const habitaciones =
-    await habitacionesResponse.json();
-
-    const usuarios =
-    await usuariosResponse.json();
-
-    const database = {
-
-        usuarios,
-        habitaciones
-    };
-
-    localStorage.setItem(
-        "database",
-        JSON.stringify(database)
-    );
+    const database =
+    JSON.parse(localStorage.getItem("database"));
 
     const contenedor =
     document.getElementById("cards");
@@ -52,9 +30,7 @@ async function iniciarInicio(){
             usuario?.favoritos?.includes(h.id);
 
             const imagenes =
-            h.imagenes && h.imagenes.length > 0
-            ? h.imagenes
-            : [];
+            h.imagenes || [];
 
             contenedor.innerHTML += `
 
@@ -72,6 +48,7 @@ async function iniciarInicio(){
                             <img
                             src="${img}"
                             class="carousel-img"
+                            onerror="this.src='assets/img/banner.jpg'"
                             >
 
                         `).join("")}
@@ -126,9 +103,38 @@ async function iniciarInicio(){
 
             `;
         });
-
     }
 
+    // MOSTRAR NOMBRE USUARIO
+    const usuario =
+    JSON.parse(localStorage.getItem("usuarioActivo"));
+
+    const navRight =
+    document.querySelector(".nav-right");
+
+    if(usuario && navRight){
+
+        navRight.innerHTML = `
+
+            <span class="usuario-nav">
+                ${usuario.nombre}
+            </span>
+
+            <button onclick="cerrarSesion()">
+                Salir
+            </button>
+
+        `;
+    }
+
+    window.cerrarSesion = function(){
+
+        localStorage.removeItem(
+            "usuarioActivo"
+        );
+
+        location.reload();
+    }
 }
 
 iniciarInicio();

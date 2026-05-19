@@ -1,120 +1,117 @@
-const registerForm =
-document.getElementById("registerForm");
+async function iniciarAuth(){
 
-if(registerForm){
+    const database =
+    await cargarDatabase();
 
-    registerForm.addEventListener("submit", e => {
+    const registerForm =
+    document.getElementById("registerForm");
 
-        e.preventDefault();
+    const loginForm =
+    document.getElementById("loginForm");
 
-        const database =
-        JSON.parse(localStorage.getItem("database"));
+    // REGISTRO
+    if(registerForm){
 
-        const nombre =
-        document.getElementById("nombre").value;
+        registerForm.addEventListener("submit", e => {
 
-        const identificacion =
-        document.getElementById("identificacion").value;
+            e.preventDefault();
 
-        const nacionalidad =
-        document.getElementById("nacionalidad").value;
+            const nombre =
+            document.getElementById("nombre").value;
 
-        const telefono =
-        document.getElementById("telefono").value;
+            const identificacion =
+            document.getElementById("identificacion").value;
 
-        const email =
-        document.getElementById("email").value;
+            const nacionalidad =
+            document.getElementById("nacionalidad").value;
 
-        const password =
-        document.getElementById("password").value;
+            const telefono =
+            document.getElementById("telefono").value;
 
-        const existe =
-        database.usuarios.find(
-            u => u.email === email
-        );
+            const email =
+            document.getElementById("email").value;
 
-        if(existe){
+            const password =
+            document.getElementById("password").value;
 
-            alert("El usuario ya existe");
-            return;
-        }
+            const existe =
+            database.usuarios.find(
+                u => u.email === email
+            );
 
-        const nuevoUsuario = {
+            if(existe){
 
-            nombre,
-            identificacion,
-            nacionalidad,
-            telefono,
-            email,
-            password,
+                alert("El usuario ya existe");
+                return;
+            }
 
-            reserva:null,
+            const nuevoUsuario = {
 
-            favoritos:[]
-        };
+                nombre,
+                identificacion,
+                nacionalidad,
+                telefono,
+                email,
+                password,
+                favoritos: [],
+                reserva: null
+            };
 
-        database.usuarios.push(
-            nuevoUsuario
-        );
+            database.usuarios.push(
+                nuevoUsuario
+            );
 
-        localStorage.setItem(
-            "database",
-            JSON.stringify(database)
-        );
+            localStorage.setItem(
+                "database",
+                JSON.stringify(database)
+            );
 
-        alert("Registro exitoso");
+            alert("Registro exitoso");
 
-        window.location.href =
-        "login.html";
+            window.location.href =
+            "login.html";
+        });
+    }
 
-    });
+    // LOGIN
+    if(loginForm){
 
+        loginForm.addEventListener("submit", e => {
+
+            e.preventDefault();
+
+            const email =
+            document.getElementById("email").value;
+
+            const password =
+            document.getElementById("password").value;
+
+            const usuario =
+            database.usuarios.find(u =>
+
+                u.email.trim() === email.trim()
+                &&
+                u.password.trim() === password.trim()
+
+            );
+
+            if(!usuario){
+
+                alert("Datos incorrectos");
+                return;
+            }
+
+            localStorage.setItem(
+                "usuarioActivo",
+                JSON.stringify(usuario)
+            );
+
+            alert("Bienvenido");
+
+            window.location.href =
+            "index.html";
+        });
+    }
 }
 
-const loginForm =
-document.getElementById("loginForm");
-
-if(loginForm){
-
-    loginForm.addEventListener("submit", e => {
-
-        e.preventDefault();
-
-        const database =
-        JSON.parse(localStorage.getItem("database"));
-
-        const email =
-        document.getElementById("email").value;
-
-        const password =
-        document.getElementById("password").value;
-
-        const usuario =
-        database.usuarios.find(
-
-            u =>
-            u.email.trim() === email.trim()
-            &&
-            u.password.trim() === password.trim()
-
-        );
-
-        if(!usuario){
-
-            alert("Datos incorrectos");
-            return;
-        }
-
-        localStorage.setItem(
-            "usuarioActivo",
-            JSON.stringify(usuario)
-        );
-
-        alert("Bienvenido");
-
-        window.location.href =
-        "index.html";
-
-    });
-
-}
+iniciarAuth();

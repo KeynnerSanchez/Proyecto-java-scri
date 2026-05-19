@@ -1,29 +1,27 @@
 async function cargarDatabase(){
 
-    const habitacionesResponse =
-    await fetch(
-        "./assets/data/habitaciones.json"
-    );
+    let database =
+    JSON.parse(localStorage.getItem("database"));
 
-    const usuariosResponse =
-    await fetch(
-        "./assets/data/usuarios.json"
-    );
+    if(!database){
 
-    const habitaciones =
-    await habitacionesResponse.json();
+        const habitacionesResponse =
+        await fetch(
+            "./assets/data/habitaciones.json"
+        );
 
-    const usuarios =
-    await usuariosResponse.json();
+        const usuariosResponse =
+        await fetch(
+            "./assets/data/usuarios.json"
+        );
 
-    const databaseGuardada =
-    JSON.parse(
-        localStorage.getItem("database")
-    );
+        const habitaciones =
+        await habitacionesResponse.json();
 
-    if(!databaseGuardada){
+        const usuarios =
+        await usuariosResponse.json();
 
-        const database = {
+        database = {
 
             usuarios,
             habitaciones
@@ -33,18 +31,7 @@ async function cargarDatabase(){
             "database",
             JSON.stringify(database)
         );
-
-    }else{
-
-        databaseGuardada.habitaciones =
-        habitaciones;
-
-        localStorage.setItem(
-            "database",
-            JSON.stringify(databaseGuardada)
-        );
     }
 
+    return database;
 }
-
-cargarDatabase();
