@@ -1,53 +1,47 @@
 function renderNavbar(){
 
-    const usuario =
-    JSON.parse(localStorage.getItem("usuarioActivo"));
+    const navRight =
+    document.querySelector(".nav-right");
 
-    const userContainer =
-    document.getElementById("userContainer");
+    if(!navRight) return;
+
+    const usuario =
+    JSON.parse(
+        localStorage.getItem("usuarioActivo")
+    );
 
     if(usuario){
 
-        userContainer.innerHTML = `
+        navRight.innerHTML = `
 
-            <div class="user-box">
+            <span class="usuario-nav">
+                ${usuario.nombre}
+            </span>
 
-                <span>
-                    ${usuario.nombre}
-                </span>
-
-                <button
-                    class="logout"
-                    onclick="logout()"
-                >
-                    Salir
-                </button>
-
-            </div>
+            <button onclick="cerrarSesion()">
+                Salir
+            </button>
 
         `;
+    }
 
-    }else{
+    else{
 
-        userContainer.innerHTML = `
+        navRight.innerHTML = `
 
-            <div class="nav-links">
+            <a href="login.html">
+                Login
+            </a>
 
-                <a href="login.html">
-                    Login
-                </a>
-
-                <a href="register.html">
-                    Registro
-                </a>
-
-            </div>
+            <a href="register.html">
+                Registro
+            </a>
 
         `;
     }
 }
 
-function logout(){
+function cerrarSesion(){
 
     localStorage.removeItem(
         "usuarioActivo"

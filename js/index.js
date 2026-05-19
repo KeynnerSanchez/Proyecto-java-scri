@@ -105,7 +105,6 @@ async function iniciarInicio(){
         });
     }
 
-    // MOSTRAR NOMBRE USUARIO
     const usuario =
     JSON.parse(localStorage.getItem("usuarioActivo"));
 
@@ -123,6 +122,21 @@ async function iniciarInicio(){
             <button onclick="cerrarSesion()">
                 Salir
             </button>
+
+        `;
+    }
+
+    else if(navRight){
+
+        navRight.innerHTML = `
+
+            <a href="login.html">
+                Login
+            </a>
+
+            <a href="register.html">
+                Registro
+            </a>
 
         `;
     }
