@@ -1,117 +1,282 @@
-async function iniciarAuth(){
+/* =========================
+REGISTER
+========================= */
 
-    const database =
-    await cargarDatabase();
+const registerForm =
+document.getElementById("registerForm");
 
-    const registerForm =
-    document.getElementById("registerForm");
+if(registerForm){
 
-    const loginForm =
-    document.getElementById("loginForm");
+    registerForm.addEventListener("submit", e => {
 
-    // REGISTRO
-    if(registerForm){
+        e.preventDefault();
 
-        registerForm.addEventListener("submit", e => {
+        const database =
+        JSON.parse(
+            localStorage.getItem("database")
+        );
 
-            e.preventDefault();
+        const nombre =
+        document.getElementById("nombre")
+        .value
+        .trim();
 
-            const nombre =
-            document.getElementById("nombre").value;
+        const identificacion =
+        document.getElementById("identificacion")
+        .value
+        .trim();
 
-            const identificacion =
-            document.getElementById("identificacion").value;
+        const nacionalidad =
+        document.getElementById("nacionalidad")
+        .value
+        .trim();
 
-            const nacionalidad =
-            document.getElementById("nacionalidad").value;
+        const telefono =
+        document.getElementById("telefono")
+        .value
+        .trim();
 
-            const telefono =
-            document.getElementById("telefono").value;
+        const email =
+        document.getElementById("email")
+        .value
+        .trim();
 
-            const email =
-            document.getElementById("email").value;
+        const password =
+        document.getElementById("password")
+        .value
+        .trim();
 
-            const password =
-            document.getElementById("password").value;
+        /* =========================
+        VALIDACIONES
+        ========================= */
 
-            const existe =
-            database.usuarios.find(
-                u => u.email === email
+        if(telefono.length < 10){
+
+            alert(
+                "El teléfono debe tener mínimo 10 caracteres"
             );
 
-            if(existe){
+            return;
+        }
 
-                alert("El usuario ya existe");
-                return;
-            }
+        if(identificacion.length < 10){
 
-            const nuevoUsuario = {
-
-                nombre,
-                identificacion,
-                nacionalidad,
-                telefono,
-                email,
-                password,
-                favoritos: [],
-                reserva: null
-            };
-
-            database.usuarios.push(
-                nuevoUsuario
+            alert(
+                "La identificación debe tener mínimo 10 caracteres"
             );
 
-            localStorage.setItem(
-                "database",
-                JSON.stringify(database)
+            return;
+        }
+
+        if(password.length < 3){
+
+            alert(
+                "La contraseña debe tener mínimo 3 caracteres"
             );
 
-            alert("Registro exitoso");
+            return;
+        }
 
-            window.location.href =
-            "login.html";
-        });
-    }
+        /* =========================
+        VALIDAR EMAIL
+        ========================= */
 
-    // LOGIN
-    if(loginForm){
+        const existeEmail =
+        database.usuarios.find(
+            u =>
+            u.email.toLowerCase()
+            ===
+            email.toLowerCase()
+        );
 
-        loginForm.addEventListener("submit", e => {
+        if(existeEmail){
 
-            e.preventDefault();
-
-            const email =
-            document.getElementById("email").value;
-
-            const password =
-            document.getElementById("password").value;
-
-            const usuario =
-            database.usuarios.find(u =>
-
-                u.email.trim() === email.trim()
-                &&
-                u.password.trim() === password.trim()
-
+            alert(
+                "Ese correo ya está registrado"
             );
 
-            if(!usuario){
+            return;
+        }
 
-                alert("Datos incorrectos");
-                return;
-            }
+        /* =========================
+        VALIDAR NOMBRE
+        ========================= */
 
-            localStorage.setItem(
-                "usuarioActivo",
-                JSON.stringify(usuario)
+        const existeNombre =
+        database.usuarios.find(
+            u =>
+            u.nombre.toLowerCase()
+            ===
+            nombre.toLowerCase()
+        );
+
+        if(existeNombre){
+
+            alert(
+                "Ese nombre ya existe"
             );
 
-            alert("Bienvenido");
+            return;
+        }
 
-            window.location.href =
-            "index.html";
-        });
-    }
+        /* =========================
+        VALIDAR PASSWORD
+        ========================= */
+
+        const existePassword =
+        database.usuarios.find(
+            u =>
+            u.password === password
+        );
+
+        if(existePassword){
+
+            alert(
+                "Esa contraseña ya está en uso"
+            );
+
+            return;
+        }
+
+        /* =========================
+        NUEVO USUARIO
+        ========================= */
+
+        const nuevoUsuario = {
+
+            nombre,
+            identificacion,
+            nacionalidad,
+            telefono,
+            email,
+            password,
+
+            reserva: null,
+
+            favoritos: []
+        };
+
+        database.usuarios.push(
+            nuevoUsuario
+        );
+
+        localStorage.setItem(
+
+            "database",
+
+            JSON.stringify(database)
+        );
+
+        alert(
+            "Registro exitoso"
+        );
+
+        window.location.href =
+        "login.html";
+
+    });
+
 }
 
-iniciarAuth();
+/* =========================
+LOGIN
+========================= */
+
+const loginForm =
+document.getElementById("loginForm");
+
+if(loginForm){
+
+    loginForm.addEventListener("submit", e => {
+
+        e.preventDefault();
+
+        const database =
+        JSON.parse(
+            localStorage.getItem("database")
+        );
+
+        /* =========================
+        VALIDAR DATABASE
+        ========================= */
+
+        if(
+            !database ||
+            !database.usuarios
+        ){
+
+            alert(
+                "No hay usuarios registrados"
+            );
+
+            return;
+        }
+
+        const email =
+        document.getElementById("email")
+        .value
+        .trim();
+
+        const password =
+        document.getElementById("password")
+        .value
+        .trim();
+
+        const usuario =
+        database.usuarios.find(
+
+            u =>
+
+            u.email.trim().toLowerCase()
+            ===
+            email.toLowerCase()
+
+            &&
+
+            u.password.trim()
+            ===
+            password
+
+        );
+
+        if(!usuario){
+
+            alert(
+                "Correo o contraseña incorrectos"
+            );
+
+            return;
+        }
+
+        localStorage.setItem(
+
+            "usuarioActivo",
+
+            JSON.stringify(usuario)
+        );
+
+        /* =========================
+        ADMIN
+        ========================= */
+
+        if(
+            usuario.email ===
+            "admin@gmail.com"
+        ){
+
+            window.location.href =
+            "admin.html";
+
+            return;
+        }
+
+        alert(
+            "Bienvenido"
+        );
+
+        window.location.href =
+        "index.html";
+
+    });
+
+}

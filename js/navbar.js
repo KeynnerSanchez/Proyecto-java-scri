@@ -1,7 +1,7 @@
-function renderNavbar(){
+const navRight =
+document.getElementById("nav-right");
 
-    const navRight =
-    document.querySelector(".nav-right");
+function renderNavbar(){
 
     if(!navRight) return;
 
@@ -14,18 +14,24 @@ function renderNavbar(){
 
         navRight.innerHTML = `
 
-            <span class="usuario-nav">
+            <span class="user-name">
+
                 ${usuario.nombre}
+
             </span>
 
-            <button onclick="cerrarSesion()">
+            <button
+            class="logout-btn"
+            onclick="cerrarSesion()"
+            >
+
                 Salir
+
             </button>
 
         `;
-    }
 
-    else{
+    }else{
 
         navRight.innerHTML = `
 
@@ -47,7 +53,8 @@ function cerrarSesion(){
         "usuarioActivo"
     );
 
-    location.reload();
+    window.location.href =
+    "index.html";
 }
 
 renderNavbar();

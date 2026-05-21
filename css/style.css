@@ -574,3 +574,358 @@ button:hover{
 
     background: #e11d48;
 }
+/* =========================
+ADMIN PANEL
+========================= */
+
+.admin-panel{
+
+    width: 90%;
+    max-width: 1400px;
+
+    margin: 40px auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 40px;
+}
+
+.admin-panel h1{
+
+    font-size: 38px;
+
+    text-align: center;
+
+    color: #222;
+}
+
+.admin-panel h2{
+
+    font-size: 28px;
+
+    margin-bottom: 20px;
+
+    color: #333;
+}
+
+/* GRID */
+
+.admin-grid{
+
+    display: grid;
+
+    grid-template-columns:
+    repeat(auto-fit, minmax(320px, 1fr));
+
+    gap: 25px;
+}
+
+/* CARDS */
+
+.admin-card{
+
+    background: white;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,0.10);
+
+    padding: 20px;
+
+    transition: 0.3s;
+}
+
+.admin-card:hover{
+
+    transform: translateY(-5px);
+
+    box-shadow:
+    0 12px 24px rgba(0,0,0,0.15);
+}
+
+.admin-card h3{
+
+    font-size: 24px;
+
+    margin-bottom: 15px;
+
+    color: #222;
+}
+
+.admin-card p{
+
+    margin: 10px 0;
+
+    font-size: 16px;
+
+    color: #555;
+
+    line-height: 1.5;
+}
+
+/* BOTONES */
+
+.admin-card button{
+
+    margin-top: 15px;
+
+    border: none;
+
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.admin-card .reservar{
+
+    background: #ff385c;
+
+    color: white;
+}
+
+.admin-card .reservar:hover{
+
+    background: #e42f50;
+}
+
+.admin-card .cancelar{
+
+    background: #111;
+
+    color: white;
+}
+
+.admin-card .cancelar:hover{
+
+    background: #333;
+}
+
+/* IMAGENES */
+
+.admin-images{
+
+    display: flex;
+
+    gap: 10px;
+
+    overflow-x: auto;
+
+    margin-bottom: 15px;
+
+    padding-bottom: 5px;
+}
+
+.admin-images::-webkit-scrollbar{
+
+    height: 8px;
+}
+
+.admin-images::-webkit-scrollbar-thumb{
+
+    background: #ccc;
+
+    border-radius: 20px;
+}
+
+.admin-img{
+
+    width: 120px;
+
+    height: 90px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    flex-shrink: 0;
+
+    border: 2px solid #eee;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 768px){
+
+    .admin-panel{
+
+        width: 95%;
+    }
+
+    .admin-panel h1{
+
+        font-size: 28px;
+    }
+
+    .admin-panel h2{
+
+        font-size: 22px;
+    }
+
+    .admin-grid{
+
+        grid-template-columns: 1fr;
+    }
+
+    .admin-card{
+
+        padding: 16px;
+    }
+
+    .admin-img{
+
+        width: 100px;
+        height: 75px;
+    }
+}
+/* =========================
+NO RESERVAS
+========================= */
+
+.no-reservas{
+
+    font-size: 15px;
+
+    color: #777;
+
+    margin-top: 10px;
+}
+
+/* =========================
+ADMIN NAVBAR FIX
+========================= */
+
+.header{
+
+    width: 100%;
+
+    background: white;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 18px 40px;
+
+    box-shadow:
+    0 2px 10px rgba(0,0,0,0.08);
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+}
+
+.logo a{
+
+    text-decoration: none;
+
+    color: #ff385c;
+
+    font-size: 28px;
+
+    font-weight: bold;
+}
+
+.nav-links{
+
+    display: flex;
+
+    gap: 30px;
+}
+
+.nav-links a{
+
+    text-decoration: none;
+
+    color: #222;
+
+    font-weight: 500;
+
+    transition: 0.3s;
+}
+
+.nav-links a:hover{
+
+    color: #ff385c;
+}
+
+.nav-right{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.user-name{
+
+    font-weight: bold;
+
+    color: #222;
+}
+
+.logout-btn{
+
+    background: #111;
+
+    color: white;
+
+    border: none;
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+.logout-btn:hover{
+
+    background: #333;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+    .header{
+
+        flex-direction: column;
+
+        gap: 15px;
+
+        padding: 20px;
+    }
+
+    .nav-links{
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    .nav-right{
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+}
